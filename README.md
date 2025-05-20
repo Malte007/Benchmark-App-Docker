@@ -69,10 +69,26 @@ mkdir -p /my/host/path/to/db
 
 > ⚠ Passe diesen Pfad ggf. an dein System an.
 
-### 2. Docker-Container starten
+### 2. Docker-Umgebungsvariable setzen und Container starten
 
 ```bash
+export DB_PATH=/my/host/path/to/db
 docker-compose up --build
+```
+Alternativ mit .env-Datei:
+
+#### .env
+
+```bash
+DB_PATH=/my/host/path/to/db
+```
+
+####  starten
+
+```bash
+Kopieren
+Bearbeiten
+docker-compose --env-file .env up --build
 ```
 
 ### 3. App im Browser öffnen
