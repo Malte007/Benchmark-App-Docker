@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Benchmark Übersicht</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f9f9fb;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .dropdown {
+      margin-bottom: 30px;
+    }
+    select {
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .benchmark-entry {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .benchmark-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .score {
+      font-weight: bold;
+      color: #333;
+      margin-top: 5px;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .button {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .button:hover {
+      background: #eee;
+    }
+    .nav-buttons {
+      margin-top: 30px;
+    }
+    .nav-buttons a {
+      margin-right: 10px;
+      text-decoration: none;
+      background: #ddd;
+      padding: 8px 14px;
+      border-radius: 8px;
+    }
+    .nav-buttons a:hover {
+      background: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Benchmark Übersicht</h1>
+
+  <div class="dropdown">
+    <form method="get">
+      <label for="benchmark_type">Benchmark-Typ auswählen:</label>
+      <select name="benchmark_type" onchange="this.form.submit()">
+        <option value="">Alle anzeigen</option>
+        {% for type in benchmark_types %}
+          <option value="{{ type.id }}" {% if selected_type_id == type.id %}selected{% endif %}>
+            {{ type.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+
+  {% for benchmark in benchmarks %}
+    <div class="benchmark-entry">
+      <div class="benchmark-info">
+        <div><strong>{{ benchmark.system.name }}</strong> – {{ benchmark.benchmark_type.name }}</div>
+        <div class="score">Score: {{ benchmark.score }}</div>
+      </div>
+      <div class="buttons">
+        <a class="button" href="{{ url_for('delete_benchmark', benchmark_id=benchmark.id) }}">Löschen</a>
+      </div>
+    </div>
+  {% endfor %}
+
+  <div class="nav-buttons">
+    <a href="{{ url_for('add_system') }}">Systeme verwalten</a>
+    <a href="{{ url_for('add_benchmark_type') }}">Benchmark-Typen verwalten</a>
+    <a href="{{ url_for('add_benchmark') }}">Benchmark hinzufügen</a>
+  </div>
+</body>
+</html>

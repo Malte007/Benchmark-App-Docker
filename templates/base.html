@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Benchmark App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f7f7f7;
+        }
+        h1 {
+            color: #333;
+        }
+        form, .content {
+            margin: 20px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        input, select, textarea {
+            padding: 8px;
+            margin: 5px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button, input[type="submit"], a.button {
+            padding: 8px 16px;
+            margin: 5px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        button:hover, input[type="submit"]:hover, a.button:hover {
+            background: #0056b3;
+        }
+        .row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .row > * {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Benchmark App</h1>
+    {% block content %}{% endblock %}
+</body>
+</html>

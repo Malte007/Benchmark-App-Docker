@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Benchmark hinzufügen</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f0f0f5;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    select, input[type="number"] {
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: white;
+      min-width: 180px;
+    }
+    button {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #e0e0e0;
+    }
+    a.nav-button {
+      margin-top: 20px;
+      display: inline-block;
+      text-decoration: none;
+      background: #ddd;
+      padding: 8px 14px;
+      border-radius: 8px;
+    }
+    a.nav-button:hover {
+      background: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Benchmark hinzufügen</h1>
+  <form method="POST" action="{{ url_for('add_benchmark') }}">
+    <select name="system_id" required>
+      <option value="" disabled selected>System auswählen</option>
+      {% for system in systems %}
+        <option value="{{ system.id }}">{{ system.name }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="benchmark_type_id" required>
+      <option value="" disabled selected>Benchmark-Typ auswählen</option>
+      {% for type in benchmark_types %}
+        <option value="{{ type.id }}">{{ type.name }}</option>
+      {% endfor %}
+    </select>
+
+    <input type="number" name="score" placeholder="Score" required min="0" step="1">
+
+    <button type="submit">Hinzufügen</button>
+  </form>
+
+  <a class="nav-button" href="{{ url_for('index') }}">Zurück zur Startseite</a>
+</body>
+</html>
