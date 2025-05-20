@@ -5,7 +5,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - .:/app
+      # - .:/app
       - ${DB_PATH}:/app/instance
     environment:
       - FLASK_ENV=development
