@@ -6,6 +6,6 @@ services:
       - "5000:5000"
     volumes:
       - .:/app
-      - /home/malte/Dokumente/db:/app/instance    # Datenbank-Ordner gemappt
+      - /my/host/path/to/db:/app/instance    # Datenbank-Ordner gemappt
     environment:
       - FLASK_ENV=development
