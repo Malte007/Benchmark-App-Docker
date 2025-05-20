@@ -6,6 +6,8 @@ services:
       - "5000:5000"
     volumes:
       - .:/app
-      - /my/host/path/to/db:/app/instance    # Datenbank-Ordner gemappt
+      - ${DB_PATH}:/app/instance
     environment:
       - FLASK_ENV=development
+      - DB_PATH=${DB_PATH}
+    restart: unless-stopped
