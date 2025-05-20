@@ -1,6 +1,7 @@
 # 🧪 Benchmark App
 
 Die **Benchmark App** ist eine einfache Webanwendung auf Basis von **Flask** und **SQLite**, mit der sich Benchmark-Ergebnisse für verschiedene Systeme erfassen, verwalten und vergleichen lassen.
+Dieses Projekt wurde mit Hilfe von chatGPT erstellt und bearbeitet.
 
 ## 🔧 Funktionen
 
