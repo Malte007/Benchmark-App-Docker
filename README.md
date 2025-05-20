@@ -86,8 +86,6 @@ DB_PATH=/my/host/path/to/db
 ####  starten
 
 ```bash
-Kopieren
-Bearbeiten
 docker-compose --env-file .env up --build
 ```
 
