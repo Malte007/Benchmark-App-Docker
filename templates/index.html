@@ -49,6 +49,13 @@
       </div>
     </form>
 
+        <!-- Navigation Buttons -->
+    <div class="mt-5 d-flex flex-wrap mb-3 gap-3 justify-content-center">
+      <a href="{{ url_for('add_system') }}" class="btn btn-primary">Systeme verwalten</a>
+      <a href="{{ url_for('add_benchmark_type') }}" class="btn btn-secondary">Benchmark-Typen verwalten</a>
+      <a href="{{ url_for('add_benchmark') }}" class="btn btn-success">Benchmark hinzufügen</a>
+    </div>
+
     <!-- Benchmark-Liste: linear von oben nach unten -->
     <div class="d-flex flex-column gap-3">
       {% for benchmark in benchmarks %}
@@ -69,12 +76,7 @@
       {% endfor %}
     </div>
 
-    <!-- Navigation Buttons -->
-    <div class="mt-5 d-flex flex-wrap gap-3 justify-content-center">
-      <a href="{{ url_for('add_system') }}" class="btn btn-primary">Systeme verwalten</a>
-      <a href="{{ url_for('add_benchmark_type') }}" class="btn btn-secondary">Benchmark-Typen verwalten</a>
-      <a href="{{ url_for('add_benchmark') }}" class="btn btn-success">Benchmark hinzufügen</a>
-    </div>
+    
   </div>
 
   <!-- Bootstrap JS -->
