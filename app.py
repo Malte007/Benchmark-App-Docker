@@ -28,6 +28,20 @@ class Benchmark(db.Model):
 with app.app_context():
     db.create_all()
 
+@app.route("/edit_system/<int:system_id>", methods=["GET", "POST"])
+def edit_system(system_id):
+    system = System.query.get_or_404(system_id)
+
+    if request.method == "POST":
+        system.name = request.form["name"]
+        system.hardware = request.form.get("hardware", "")
+        system.oc = request.form.get("oc", "")
+        db.session.commit()
+        return redirect(url_for("index"))
+
+    return render_template("edit_system.html", system=system)
+
+
 @app.route('/')
 def index():
     selected_type_id = request.args.get('benchmark_type', type=int)
