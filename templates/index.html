@@ -25,6 +25,15 @@
     .btn-danger:hover {
       background-color: #c82333;
     }
+    .ranking-badge {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+      background-color: #007bff;
+      border-radius: 0.4rem;
+      padding: 0.2rem 0.6rem;
+      margin-right: 0.5rem;
+    }
   </style>
 </head>
 <body>
@@ -33,50 +42,60 @@
     <h1 class="mb-4 text-center">Benchmark Übersicht</h1>
 
     <!-- Benchmark-Typ Dropdown -->
-    <form method="get" class="mb-4">
+    <form method="POST" class="mb-4">
       <div class="row g-2 align-items-center justify-content-center">
         <div class="col-auto">
           <label for="benchmark_type" class="col-form-label fw-bold">Benchmark-Typ:</label>
         </div>
         <div class="col-sm-4">
-          <select class="form-select" name="benchmark_type" onchange="this.form.submit()">
-            <option value="">Alle anzeigen</option>
+          <select class="form-select" name="benchmark_type" id="benchmark_type">
+            <option value="">-- Bitte wählen --</option>
             {% for type in benchmark_types %}
               <option value="{{ type.id }}" {% if selected_type_id == type.id %}selected{% endif %}>{{ type.name }}</option>
             {% endfor %}
           </select>
         </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Filtern</button>
+        </div>
       </div>
     </form>
 
-        <!-- Navigation Buttons -->
+    <!-- Navigation Buttons -->
     <div class="mt-5 d-flex flex-wrap mb-3 gap-3 justify-content-center">
       <a href="{{ url_for('add_system') }}" class="btn btn-primary">Systeme verwalten</a>
       <a href="{{ url_for('add_benchmark_type') }}" class="btn btn-secondary">Benchmark-Typen verwalten</a>
       <a href="{{ url_for('add_benchmark') }}" class="btn btn-success">Benchmark hinzufügen</a>
     </div>
 
-    <!-- Benchmark-Liste: linear von oben nach unten -->
-    <div class="d-flex flex-column gap-3">
-      {% for benchmark in benchmarks %}
-        <div class="card shadow-sm animate__animated animate__fadeInUp">
-          <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
-            <div>
-              <h5 class="card-title mb-1">{{ benchmark.system.name }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ benchmark.benchmark_type.name }}</h6>
-              <p class="mb-1"><strong>Hardware:</strong> {{ benchmark.system.hardware or 'Keine Angabe' }}</p>
-              <p class="mb-2"><strong>OC:</strong> {{ benchmark.system.oc or 'Keine Angabe' }}</p>
-              <p class="card-text fw-bold mb-0">Score: {{ benchmark.score }}</p>
-            </div>
-            <div class="mt-2 mt-md-0">
-              <a href="{{ url_for('delete_benchmark', benchmark_id=benchmark.id) }}" class="btn btn-sm btn-danger">Löschen</a>
-            </div>
+    <!-- Benchmark-Liste nach Score sortiert -->
+    {% if benchmarks %}
+      <div class="d-flex flex-column gap-3">
+  {% for benchmark in benchmarks %}
+    <div class="card shadow-sm animate__animated animate__fadeInUp">
+      <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex align-items-center mb-3 mb-md-0" style="min-width: 200px;">
+          <div class="me-4 text-center" style="font-size: 1.5rem; font-weight: bold; width: 50px;">
+            #{{ loop.index }}
+          </div>
+          <div>
+            <h5 class="card-title mb-1">{{ benchmark.system.name }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ benchmark.benchmark_type.name }}</h6>
+            <p class="mb-1"><strong>Hardware:</strong> {{ benchmark.system.hardware or 'Keine Angabe' }}</p>
+            <p class="mb-2"><strong>OC:</strong> {{ benchmark.system.oc or 'Keine Angabe' }}</p>
+            <p class="card-text fw-bold mb-0">Score: {{ benchmark.score }}</p>
           </div>
         </div>
-      {% endfor %}
+        <div class="mt-2 mt-md-0">
+          <a href="{{ url_for('delete_benchmark', benchmark_id=benchmark.id) }}" class="btn btn-sm btn-danger">Löschen</a>
+        </div>
+      </div>
     </div>
-
-    
+  {% endfor %}
+</div>
+    {% else %}
+      <p class="text-center text-muted mt-4">Keine Ergebnisse – wähle einen Benchmark-Typ zum Filtern.</p>
+    {% endif %}
   </div>
 
   <!-- Bootstrap JS -->

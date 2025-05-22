@@ -42,15 +42,27 @@ def edit_system(system_id):
     return render_template("edit_system.html", system=system)
 
 
-@app.route('/')
+@app.route("/", methods=["GET", "POST"])
 def index():
-    selected_type_id = request.args.get('benchmark_type', type=int)
     benchmark_types = BenchmarkType.query.all()
-    if selected_type_id:
-        benchmarks = Benchmark.query.filter_by(benchmark_type_id=selected_type_id).order_by(Benchmark.score.desc()).all()
-    else:
-        benchmarks = Benchmark.query.order_by(Benchmark.score.desc()).all()
-    return render_template('index.html', benchmarks=benchmarks, benchmark_types=benchmark_types, selected_type_id=selected_type_id)
+    selected_type_id = None
+    benchmarks = []
+
+    if request.method == "POST":
+        selected_type_id = request.form.get("benchmark_type")
+        if selected_type_id:
+            benchmarks = Benchmark.query \
+                .filter_by(benchmark_type_id=selected_type_id) \
+                .order_by(Benchmark.score.desc()) \
+                .all()
+
+    return render_template(
+        "index.html",
+        benchmark_types=benchmark_types,
+        selected_type_id=selected_type_id,
+        benchmarks=benchmarks
+    )
+
 
 @app.route('/add_system', methods=['GET', 'POST'])
 def add_system():
